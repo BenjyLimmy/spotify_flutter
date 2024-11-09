@@ -4,22 +4,20 @@ import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignupPageState extends State<SignupPage> {
-  final TextEditingController nameController = TextEditingController();
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -38,18 +36,13 @@ class _SignupPageState extends State<SignupPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Sign Up.',
+                'Sign In.',
                 style: TextStyle(
                   fontSize: 60,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const Gap(30),
-              CustomField(
-                hintText: 'Name',
-                controller: nameController,
-              ),
-              const Gap(15),
               CustomField(
                 hintText: 'Email',
                 controller: emailController,
@@ -62,17 +55,17 @@ class _SignupPageState extends State<SignupPage> {
               ),
               const Gap(20),
               AuthGradientButton(
-                buttonText: 'Sign Up',
+                buttonText: 'Sign In',
                 onTap: () {},
               ),
               const Gap(20),
               RichText(
                 text: TextSpan(
-                  text: 'Already have an account? ',
+                  text: 'Don\'t have an account? ',
                   style: Theme.of(context).textTheme.titleMedium,
                   children: const [
                     TextSpan(
-                      text: 'Sign In',
+                      text: 'Sign Up',
                       style: TextStyle(
                           color: Palette.gradient2,
                           fontWeight: FontWeight.bold),
