@@ -1,3 +1,5 @@
+import 'package:client/core/theme/app_palette.dart';
+import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -38,6 +40,22 @@ class _SignupPageState extends State<SignupPage> {
             CustomField(
               hintText: 'Password',
             ),
+            const Gap(20),
+            AuthGradientButton(),
+            const Gap(20),
+            RichText(
+              text: TextSpan(
+                text: 'Already have an account? ',
+                style: Theme.of(context).textTheme.titleMedium,
+                children: [
+                  TextSpan(
+                    text: 'Sign In',
+                    style: TextStyle(
+                        color: Palette.gradient2, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
