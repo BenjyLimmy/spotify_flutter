@@ -1,4 +1,6 @@
+import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -10,6 +12,35 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Sign Up.',
+              style: TextStyle(
+                fontSize: 60,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Gap(30),
+            CustomField(
+              hintText: 'Name',
+            ),
+            const Gap(15),
+            CustomField(
+              hintText: 'Email',
+            ),
+            const Gap(15),
+            CustomField(
+              hintText: 'Password',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
