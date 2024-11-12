@@ -1,9 +1,7 @@
-# User Table
-
 from sqlalchemy import TEXT, VARCHAR, Column, LargeBinary
 from models.base import Base
 
-
+# User PostgreSQL Table
 class User(Base):
     __tablename__ = "users"
     id = Column(TEXT, primary_key=True)
