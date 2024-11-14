@@ -31,3 +31,132 @@ Before you begin, ensure you have the following installed on your system:
 - **Python**: Python 3.7+ for running the backend. Install it from [Python.org](https://www.python.org/downloads/).
 - **PostgreSQL**: PostgreSQL installed and running locally. [PostgreSQL installation guide](https://www.postgresql.org/download/).
 - **Cloudinary Account**: Create an account on [Cloudinary](https://cloudinary.com/) for managing audio files.
+
+### 1. Clone the Repository
+* Start by cloning the repository to your local machine:
+```bash
+git clone https://github.com/BenjyLimmy/spotify_flutter.git
+cd spotify_flutter
+```
+
+### 2. Set Up the Backend (FastAPI)
+
+#### A. Initial Setup
+* Navigate to the backend directory:
+```bash
+cd server
+```
+
+* Create and activate a virtual environment:
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# For Unix/macOS
+source venv/bin/activate
+# For Windows
+venv\Scripts\activate
+```
+
+#### B. Install Dependencies
+* Install required Python packages:
+```bash
+pip install fastapi uvicorn sqlalchemy psycopg2-binary python-dotenv python-multipart
+```
+
+* Key dependencies:
+  * fastapi
+  * uvicorn
+  * sqlalchemy
+  * psycopg2-binary
+  * python-dotenv
+  * python-multipart
+  * pydantic
+  * asyncpg
+  * passlib
+  * python-jose
+  * bcrypt
+
+#### C. Configuration
+* Configure your PostgreSQL database:
+  * Create a `.env` file in the backend directory
+  * Add your credentials:
+```plaintext
+DATABASE_URL=postgresql://username:password@localhost:5432/dbname
+SECRET_KEY=your_secret_key
+```
+
+#### D. Start Backend Server
+* Run the FastAPI backend:
+```bash
+fastapi dev main.py
+```
+* The backend API will be available at `http://localhost:8000`
+
+### 3. Set Up the Frontend (Flutter)
+
+#### A. Navigate to Client Directory
+* Change to the client directory:
+```bash
+cd client
+```
+
+#### B. Flutter Setup
+* Install Flutter dependencies:
+```bash
+flutter pub get
+```
+
+#### C. Configure Cloudinary
+* Create `lib/config.dart` and add:
+```dart
+class Config {
+    static const String cloudinaryUrl = "YOUR_CLOUDINARY_URL";
+}
+```
+
+#### D. Launch Application
+* Run the Flutter app:
+```bash
+flutter run
+```
+
+### 4. Database Configuration
+
+#### A. Database Setup
+* Import the database schema:
+```bash
+psql -U your_username -d your_database -f backend/schema.sql
+```
+
+#### B. Schema Configuration
+* Ensure PostgreSQL instance is configured with:
+  * User authentication tables
+  * Music management schemas
+  * Required indexes and constraints
+
+### 5. Additional Configuration Requirements
+
+#### A. Database Checklist
+- [ ] PostgreSQL server installed and running
+- [ ] Database created and accessible
+- [ ] Schema successfully imported
+- [ ] User permissions configured
+
+#### B. Backend Checklist
+- [ ] Virtual environment activated
+- [ ] All Python dependencies installed
+- [ ] Environment variables set
+- [ ] API running successfully
+
+#### C. Frontend Checklist
+- [ ] Flutter SDK installed
+- [ ] Dependencies resolved
+- [ ] Cloudinary configuration complete
+- [ ] Development environment ready
+
+#### D. External Services
+- [ ] Cloudinary account created
+- [ ] API keys generated and configured
+- [ ] Storage buckets set up
