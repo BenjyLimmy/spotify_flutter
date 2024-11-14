@@ -13,9 +13,44 @@ part of 'auth_viewmodel.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+/// Returns a hash for the `AuthViewModel`, used to track and validate
+/// code generations. This hash ensures that Riverpod's provider generation
+/// accurately maps to the `AuthViewModel` state object.
 String _$authViewModelHash() => r'4ef2e067a3701792ffa70216148b060d9ce77e32';
 
-/// See also [AuthViewModel].
+/// Provider for the [AuthViewModel].
+///
+/// This provider is an instance of [AutoDisposeNotifierProvider], which
+/// automatically disposes of itself when no longer in use, optimizing memory
+/// usage. It allows for the retrieval and management of `AsyncValue` states
+/// related to user authentication. `AsyncValue` encapsulates states of
+/// loading, success, and failure for asynchronous operations within the
+/// `AuthViewModel`.
+///
+/// ## Usage:
+/// To access the authentication state, use `ref.watch(authViewModelProvider)`,
+/// which will return an [AsyncValue] representing the current authentication
+/// status and user data if available.
+///
+/// ### Properties:
+/// - **name**: A unique identifier for debugging purposes.
+/// - **debugGetCreateSourceHash**: A hash function used for hot-reload support
+///   and debugging; will be null in production environments to optimize performance.
+///
+/// ### Example:
+/// ```dart
+/// final authState = ref.watch(authViewModelProvider);
+/// if (authState is AsyncData) {
+///   // Handle authenticated state
+/// }
+/// ```
+///
+/// **Note**: This provider depends on `AutoDisposeNotifier`, which ensures that
+/// any resources held by the provider are disposed of when no longer used, ideal
+/// for scenarios where users may log in and out frequently.
+///
+/// See also:
+/// - [AuthViewModel] for the core authentication logic.
 @ProviderFor(AuthViewModel)
 final authViewModelProvider =
     AutoDisposeNotifierProvider<AuthViewModel, AsyncValue>.internal(
@@ -28,6 +63,12 @@ final authViewModelProvider =
   allTransitiveDependencies: null,
 );
 
+/// Type definition for `AuthViewModel`.
+///
+/// The typedef helps maintain consistency across code references to
+/// the `AutoDisposeNotifier` used by `authViewModelProvider`, ensuring that
+/// the provider's lifecycle management remains standardized and predictable.
 typedef _$AuthViewModel = AutoDisposeNotifier<AsyncValue>;
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
