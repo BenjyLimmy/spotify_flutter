@@ -76,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
                   // check if success (Right) / failure (Left)
                   final val = switch (res) {
                     Left(value: final l) => l,
-                    Right(value: final r) => r.toString(),
+                    Right(value: final r) => r,
                   };
                   print(val);
                 },
