@@ -31,9 +31,12 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ref.watch - Observes and rebuilds the widget or function whenever the provider's state changes.
     // Watch AuthViewModel Provider for any state change
     final bool isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
 
+    // ref.listen - Listens to CHANGES in a provider's state and allows
+    // to perform side effects (e.g., navigation, showing a dialog/snackbar).
     ref.listen(
       authViewModelProvider,
       (_, next) {
@@ -57,7 +60,15 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               ),
             );
           },
-          error: (error, st) {},
+          error: (error, st) {
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(error.toString()),
+                ),
+              );
+          },
           loading: () {},
         );
       },
