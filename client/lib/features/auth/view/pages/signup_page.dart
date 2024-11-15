@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_palette.dart';
+import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
@@ -46,13 +47,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           data: (data) {
             // Get ScaffoldMessenger instance then cascades hiding and showing of the new snackbar
             // using the instance
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('Account created successfully! Please log in.'),
-                ),
-              );
+            showSnackBar(
+              context,
+              'Account created successfully! Please log in.',
+            );
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -61,13 +59,10 @@ class _SignupPageState extends ConsumerState<SignupPage> {
             );
           },
           error: (error, st) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(error.toString()),
-                ),
-              );
+            showSnackBar(
+              context,
+              error.toString(),
+            );
           },
           loading: () {},
         );

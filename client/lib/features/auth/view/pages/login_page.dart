@@ -1,4 +1,5 @@
 import 'package:client/core/theme/app_palette.dart';
+import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
 import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/signup_page.dart';
@@ -47,7 +48,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             //   ),
             // );
           },
-          error: (error, st) {},
+          error: (error, st) {
+            showSnackBar(
+              context,
+              error.toString(),
+            );
+          },
           loading: () {},
         );
       },
