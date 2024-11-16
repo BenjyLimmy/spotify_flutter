@@ -78,4 +78,13 @@ class AuthViewModel extends _$AuthViewModel {
     _authLocalRepository.setToken(user.token);
     return state = AsyncValue.data(user);
   }
+
+  Future<UserModel?> getData() async {
+    state = AsyncValue.loading();
+    final token = _authLocalRepository.getToken();
+    if (token != null) {
+      // TODO: send request to server to get the user data by token
+    }
+    return null;
+  }
 }
