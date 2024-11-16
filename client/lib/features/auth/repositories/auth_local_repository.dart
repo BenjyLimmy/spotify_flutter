@@ -1,6 +1,15 @@
-// HTTP calls interacting with local database (phone)
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+part 'auth_local_repository.g.dart';
+
+@riverpod
+AuthLocalRepository authLocalRepository(Ref ref) {
+  return AuthLocalRepository();
+}
+
+// HTTP calls interacting with local database (phone)
 class AuthLocalRepository {
   late SharedPreferences _sharedPreferences;
 
