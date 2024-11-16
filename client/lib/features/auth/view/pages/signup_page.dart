@@ -1,6 +1,7 @@
 import 'package:client/core/theme/app_palette.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
+import 'package:client/core/widgets/scrollable_form.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
@@ -76,83 +77,77 @@ class _SignupPageState extends ConsumerState<SignupPage> {
           ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Center(
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Form(
-                    //call validator method inside children which are TextFormFields
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Sign Up.',
-                          style: TextStyle(
-                            fontSize: 60,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Gap(30),
-                        CustomField(
-                          hintText: 'Name',
-                          controller: nameController,
-                        ),
-                        const Gap(15),
-                        CustomField(
-                          hintText: 'Email',
-                          controller: emailController,
-                        ),
-                        const Gap(15),
-                        CustomField(
-                          hintText: 'Password',
-                          controller: passwordController,
-                          isObscureText: true,
-                        ),
-                        const Gap(20),
-                        AuthGradientButton(
-                          buttonText: 'Sign Up',
-                          onTap: () async {
-                            // Calls validator function inside CustomField(s)
-                            if (formKey.currentState!.validate()) {
-                              // call read to provider to access the function
-                              await ref
-                                  .read(authViewModelProvider.notifier)
-                                  .signUpUser(
-                                    name: nameController.text,
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  );
-                            }
-                          },
-                        ),
-                        const Gap(20),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginPage(),
-                              ),
-                            );
-                          },
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Already have an account? ',
-                              style: Theme.of(context).textTheme.titleMedium,
-                              children: const [
-                                TextSpan(
-                                  text: 'Sign In',
-                                  style: TextStyle(
-                                      color: Palette.gradient2,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
+              child: ScrollableForm(
+                formKey: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Sign Up.',
+                      style: TextStyle(
+                        fontSize: 60,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    const Gap(30),
+                    CustomField(
+                      hintText: 'Name',
+                      controller: nameController,
+                    ),
+                    const Gap(15),
+                    CustomField(
+                      hintText: 'Email',
+                      controller: emailController,
+                    ),
+                    const Gap(15),
+                    CustomField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                      isObscureText: true,
+                    ),
+                    const Gap(20),
+                    AuthGradientButton(
+                      buttonText: 'Sign Up',
+                      onTap: () async {
+                        // Calls validator function inside CustomField(s)
+                        if (formKey.currentState!.validate()) {
+                          // call read to provider to access the function
+                          await ref
+                              .read(authViewModelProvider.notifier)
+                              .signUpUser(
+                                name: nameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                        }
+                      },
+                    ),
+                    const Gap(20),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'Already have an account? ',
+                          style: Theme.of(context).textTheme.titleMedium,
+                          children: const [
+                            TextSpan(
+                              text: 'Sign In',
+                              style: TextStyle(
+                                  color: Palette.gradient2,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
