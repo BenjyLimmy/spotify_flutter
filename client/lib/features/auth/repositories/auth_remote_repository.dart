@@ -90,7 +90,9 @@ class AuthRemoteRepository {
         );
       } else {
         return Right(
-          UserModel.fromMap(resBodyMap['user']),
+          UserModel.fromMap(resBodyMap['user']).copyWith(
+            token: resBodyMap['token'],
+          ),
         );
       }
     } catch (e) {
