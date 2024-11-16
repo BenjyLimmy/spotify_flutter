@@ -24,6 +24,10 @@ class AuthViewModel extends _$AuthViewModel {
     return null;
   }
 
+  Future<void> initSharedPreferences() async {
+    await _authLocalRepository.init();
+  }
+
   Future<void> signUpUser({
     required String name,
     required String email,
