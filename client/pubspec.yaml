@@ -41,6 +41,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
   riverpod_annotation: ^2.6.1
   shared_preferences: ^2.3.3
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
