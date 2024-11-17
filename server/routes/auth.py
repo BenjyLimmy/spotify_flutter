@@ -1,8 +1,9 @@
 import uuid
 import bcrypt
-from fastapi import Depends, FastAPI, HTTPException, APIRouter
+from fastapi import Depends, FastAPI, HTTPException, APIRouter, Header
 
 from database import get_db
+from middleware.auth_middleware import get_private_key, get_public_key, auth_middleware
 from models.user import User
 from pydantic_schemas.user_create import UserCreate
 from sqlalchemy.orm import Session
@@ -14,9 +15,6 @@ import os
 # Load .env file
 load_dotenv()
 
-# Retrieve the keys
-private_key = os.getenv("PRIVATE_KEY").replace('\\n', '\n')  # Handle single-line keys
-public_key = os.getenv("PUBLIC_KEY").replace('\\n', '\n')
 
 router = APIRouter()
 
@@ -59,12 +57,28 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
     
     # If password match, return User instance
     if is_match:
-        token = jwt.encode({'id': user_db.id}, private_key, algorithm='RS256')
+        token = jwt.encode({'id': user_db.id}, get_private_key(), algorithm='RS256')
         
         return {'token': token, 'user': user_db}
     # Throw error for incorrect password
     else:
         raise HTTPException(400, 'Incorrect password.')
     
+@router.get('/')
+def get_current_user(db: Session = Depends(get_db), user_dict: dict = Depends(auth_middleware)):
+    # Use auth_middleware to validate the token and extract user information (user id)
+    # The token and user id are passed as a dictionary (user_dict)
+
+    # Query the database for the user with the extracted user id
+    user = db.query(User).filter(User.id == user_dict['uid']).first()
+
+    # If no user is found in the database, raise a 404 error
+    if not user:
+        raise HTTPException(404, 'User not found.')
+    
+    # Return the user information
+    return user
+
+        
 
     
