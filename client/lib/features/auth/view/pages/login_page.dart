@@ -2,14 +2,13 @@ import 'package:client/core/theme/app_palette.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/core/widgets/loader.dart';
 import 'package:client/core/widgets/scrollable_form.dart';
-import 'package:client/features/auth/repositories/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/signup_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
 import 'package:client/features/auth/view/widgets/custom_field.dart';
 import 'package:client/features/auth/viewmodel/auth_viewmodel.dart';
+import 'package:client/features/home/view/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:gap/gap.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -33,7 +32,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final bool isLoading = ref
+        .watch(authViewModelProvider.select((val) => val?.isLoading == true));
 
     ref.listen(
       authViewModelProvider,
@@ -41,13 +41,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         next?.when(
           // When there is data (UserModel)
           data: (data) {
-            // TODO: Navigate to home page
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const LoginPage(),
-            //   ),
-            // );
+            showSnackBar(
+              context,
+              'Login successful.',
+            );
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+              (_) => false,
+            );
           },
           error: (error, st) {
             showSnackBar(
@@ -94,17 +98,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     AuthGradientButton(
                       buttonText: 'Sign In',
                       onTap: () async {
-                        final res = await AuthRemoteRepository().login(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-
-                        // check if success (Right) / failure (Left)
-                        final val = switch (res) {
-                          Left(value: final l) => l,
-                          Right(value: final r) => r,
-                        };
-                        print(val);
+                        if (formKey.currentState!.validate()) {
+                          await ref
+                              .read(authViewModelProvider.notifier)
+                              .loginUser(
+                                email: emailController.text,
+                                password: passwordController.text,
+                              );
+                        }
                       },
                     ),
                     const Gap(20),

@@ -35,7 +35,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   Widget build(BuildContext context) {
     // ref.watch - Observes and rebuilds the widget or function whenever the provider's state changes.
     // Watch AuthViewModel Provider for any state change
-    final bool isLoading = ref.watch(authViewModelProvider)?.isLoading == true;
+    final bool isLoading = ref
+        .watch(authViewModelProvider.select((val) => val?.isLoading == true));
 
     // ref.listen - Listens to CHANGES in a provider's state and allows
     // to perform side effects (e.g., navigation, showing a dialog/snackbar).
